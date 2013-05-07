@@ -1,7 +1,7 @@
 int[] primes;
 PFont body;
 void setup() {
-  size(400, 800);
+  size(800, 800);
   noLoop(); //no need to redraw as the values don't change 
   body = loadFont("TheSans-Plain-12.vlw");
   textFont(body);
