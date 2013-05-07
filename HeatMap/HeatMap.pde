@@ -17,13 +17,18 @@ void draw() {
   background(0);
 
   fill(255);
-  text("All Prime Numbers under Ten Million", 20, 20);
-  drawPixelSizeBox(700, 350);
+  text("Data Set: All Prime Numbers under Ten Million", 20, 20);
+  int primeIndexReached = drawPixelSizeBox(700, 750);
+  
+  
+  fill(255);
+  text(("(Largeset Prime displayed:"+primes[primeIndexReached]+")"), 400, 20);
+
 }
 
 
 
-void drawCustomSizeBox(int heightOfBox, int widthOfBox, int lengthOfSide){
+int drawCustomSizeBox(int heightOfBox, int widthOfBox, int lengthOfSide){
   strokeWeight(0);
   int widthOffset = (width - widthOfBox*lengthOfSide)/2;
   int heightOffset = (height - heightOfBox*lengthOfSide)/2;
@@ -40,9 +45,14 @@ void drawCustomSizeBox(int heightOfBox, int widthOfBox, int lengthOfSide){
       rect(i*lengthOfSide+widthOffset, j*lengthOfSide+heightOffset, lengthOfSide, lengthOfSide);
     }
   }
+   if(primeIndex >= primes.length)
+   {
+     primeIndex--;
+   }
+   return primeIndex;
 }
 
-void drawPixelSizeBox(int heightOfBox, int widthOfBox){
+int drawPixelSizeBox(int heightOfBox, int widthOfBox){
   int widthOffset = (width - widthOfBox)/2;
   int heightOffset = (height - heightOfBox)/2;
   
@@ -57,14 +67,20 @@ void drawPixelSizeBox(int heightOfBox, int widthOfBox){
       set(i+widthOffset, j+heightOffset, c);
     }
   }
+
+  if(primeIndex >= primes.length)
+  {
+     primeIndex--;
+  }
+  return primeIndex;
 }
 
-void drawPixelSizeBoxWithBorder(int heightOfBox, int widthOfBox, int borderWidth){
+int drawPixelSizeBoxWithBorder(int heightOfBox, int widthOfBox, int borderWidth){
   int offsetY = (height - heightOfBox)/2-borderWidth;
   int offsetX = (width - widthOfBox)/2-borderWidth;
   fill(155);
   rect(offsetX, offsetY, widthOfBox+2*borderWidth-1, heightOfBox+2*borderWidth-1);  
-  drawPixelSizeBox(heightOfBox, widthOfBox);
+  return drawPixelSizeBox(heightOfBox, widthOfBox);
 
 }
 
