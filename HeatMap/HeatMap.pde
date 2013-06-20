@@ -2,7 +2,8 @@ int[] primes;
 PFont body;
 void setup() {
   size(800, 800);
-  noLoop(); //no need to redraw as the values don't change 
+  strokeWeight(1);
+// noLoop(); //no need to redraw as the values don't change 
   body = loadFont("TheSans-Plain-12.vlw");
   textFont(body);
   String[] lines = loadStrings("TOO_MANY_PRIMES.tsv");//"FIRST_1000_PRIMES.tsv");
@@ -18,14 +19,42 @@ void draw() {
 
   fill(255);
   text("Data Set: All Prime Numbers under Ten Million", 20, 20);
-  int primeIndexReached = drawPixelSizeBox(700, 750);
   
+  int heightOfBox = 700;
+  int widthOfBox = 750;
   
+  int primeIndexReached = drawPixelSizeBox(heightOfBox, widthOfBox);
+  
+  int widthOffset = (width - widthOfBox)/2;
+  int heightOffset = (height - heightOfBox)/2;
+
+int mouseAdjX = mouseX - 3;//where the mouse thinks the pixel is is wrong
+int mouseAdjY = mouseY - 4; 
+  
+  int xSelectClamp = constrain(mouseAdjX, widthOffset -1, widthOffset+widthOfBox-2);
+  int ySelectClamp = constrain(mouseAdjY, heightOffset-1, heightOffset+heightOfBox-2) ;
+
+  stroke(#FFCC00);
+  noFill();
+  rect(xSelectClamp, ySelectClamp, 2, 2);
+
+  color pixelColor = get(xSelectClamp+1, ySelectClamp+1);
+//  fill(pixelColor);
+//  noStroke();
+//  rect(25, 25, 50, 50);
+
+  String primeTest = "not a prime";
+  if(pixelColor == color(255)){
+    primeTest = "a prime";
+  }
+  
+  int xReadClamp = constrain(mouseAdjX - widthOffset, 0, widthOfBox);
+  int yReadClamp = constrain(mouseAdjY - heightOffset, 0, heightOfBox);
+
   fill(255);
-  text(("(Largeset Prime displayed:"+primes[primeIndexReached]+")"), 400, 20);
-
+  text(((xReadClamp+yReadClamp*widthOfBox+1)+"\n" + primeTest), 400, 20);
+//"(X:"+xReadClamp+" Y:"+yReadClamp+")"+
 }
-
 
 
 int drawCustomSizeBox(int heightOfBox, int widthOfBox, int lengthOfSide){
